@@ -1,18 +1,18 @@
 #ifndef INPUT_STRUCT_H
 #define INPUT_STRUCT_H
 struct INPUT_STRUCT {
-        bool up;
-        bool down;
-        bool left;
-        bool right;
-        bool upPressed;
-        bool downPressed;
-        bool leftPressed;
-        bool rightPressed;
-        bool upReleased;
-        bool downReleased;
-        bool leftReleased;
-        bool rightReleased;
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
+        bool upPressed = false;
+        bool downPressed = false;
+        bool leftPressed = false;
+        bool rightPressed = false;
+        bool upReleased = false;
+        bool downReleased = false;
+        bool leftReleased = false;
+        bool rightReleased = false;
     };
 typedef INPUT_STRUCT InputStruct;
 #endif
