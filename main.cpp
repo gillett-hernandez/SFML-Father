@@ -3,23 +3,24 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "Input.hpp"
-
-const bool debug = true;
-
-using namespace std;
-
+#include "RingMenu.hpp"
+RingMenu *RingMenu::s_instance = 0;
 int main(int argc, char const *argv[]) {
     std::cout << "Arguments: " << argc;
     for (int i = 0; i < argc; i++) {
         std::cout << std::endl << "arg "<< i << ": " << argv[i] << std::endl;
     }
-    sf::RenderWindow window(sf::VideoMode(640, 480), argv[1]);
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), argv[1]);
     window.setFramerateLimit(60);
 
-    InputStruct input;
+    Input input = Input();
+    //RingMenu ring = RingMenu();
+    RingMenu *s_ring = RingMenu::instance();
+    std::cout << s_ring << std::endl;
+    input.listeners.push_back(s_ring);
 
     while (window.isOpen()) {
-        clearInput(input);
+        input.clearInput();
 
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -32,68 +33,67 @@ int main(int argc, char const *argv[]) {
                 } else {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
                         || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                        if (input.left == false) {
-                            input.leftPressed = true;
+                        if (input.inputStruct.left == false) {
+                            input.inputStruct.leftPressed = true;
                         }
-                        input.left = true;
+                        input.inputStruct.left = true;
                     }
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
                         || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                        if (input.right == false) {
-                            input.rightPressed = true;
+                        if (input.inputStruct.right == false) {
+                            input.inputStruct.rightPressed = true;
                         }
-                        input.right = true;
+                        input.inputStruct.right = true;
                     }
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
                         || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-                        if (input.up == false) {
-                            input.upPressed = true;
+                        if (input.inputStruct.up == false) {
+                            input.inputStruct.upPressed = true;
                         }
-                        input.up = true;
+                        input.inputStruct.up = true;
                     }
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
                         || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                        if (input.down == false) {
-                            input.downPressed = true;
+                        if (input.inputStruct.down == false) {
+                            input.inputStruct.downPressed = true;
                         }
-                        input.down = true;
+                        input.inputStruct.down = true;
                     }
                 }
             } else if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::Left
                     || event.key.code == sf::Keyboard::A) {
-                    if (input.left == true) {
-                        input.leftReleased = true;
+                    if (input.inputStruct.left == true) {
+                        input.inputStruct.leftReleased = true;
                     }
-                    input.left = false;
+                    input.inputStruct.left = false;
                 }
                 if (event.key.code == sf::Keyboard::Right
                     || event.key.code == sf::Keyboard::D) {
-                    if (input.right == true) {
-                        input.rightReleased = true;
+                    if (input.inputStruct.right == true) {
+                        input.inputStruct.rightReleased = true;
                     }
-                    input.right = false;
+                    input.inputStruct.right = false;
                 }
                 if (event.key.code == sf::Keyboard::Up
                     || event.key.code == sf::Keyboard::W) {
-                    if (input.up == true) {
-                        input.upReleased = true;
+                    if (input.inputStruct.up == true) {
+                        input.inputStruct.upReleased = true;
                     }
-                    input.up = false;
+                    input.inputStruct.up = false;
                 }
                 if (event.key.code == sf::Keyboard::Down
                     || event.key.code == sf::Keyboard::S) {
-                    if (input.down == true) {
-                        input.downReleased = true;
+                    if (input.inputStruct.down == true) {
+                        input.inputStruct.downReleased = true;
                     }
-                    input.down = false;
+                    input.inputStruct.down = false;
                 }
             }
         }
-        if (debug) {
-            logForInput(input);
-        }
+        input.logForInput();
         window.clear();
+        window.draw(*s_ring);
         window.display();
     }
 
