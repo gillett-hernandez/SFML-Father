@@ -1,12 +1,84 @@
 #include "Input.hpp"
 
+Input *Input::s_instance = nullptr;
 const bool debug = false;
 
 Input::Input() {
+    this->clearInput();
 
 }
 Input::~Input() {
-    
+
+}
+
+void Input::addListener(InputListener *listener) {
+    this->listeners.push_back(listener);
+}
+
+void Input::removeListener(InputListener *listener) {
+    this->listeners.erase(std::remove(this->listeners.begin(), this->listeners.end(), listener), this->listeners.end());
+}
+
+void Input::processEvent(sf::Event &event) {
+    if (event.type == sf::Event::KeyPressed) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+            || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            if (this->inputStruct.left == false) {
+                this->inputStruct.leftPressed = true;
+            }
+            this->inputStruct.left = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+            || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            if (this->inputStruct.right == false) {
+                this->inputStruct.rightPressed = true;
+            }
+            this->inputStruct.right = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+            || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            if (this->inputStruct.up == false) {
+                this->inputStruct.upPressed = true;
+            }
+            this->inputStruct.up = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+            || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            if (this->inputStruct.down == false) {
+                this->inputStruct.downPressed = true;
+            }
+            this->inputStruct.down = true;
+        }
+    } else if (event.type == sf::Event::KeyReleased) {
+        if (event.key.code == sf::Keyboard::Left
+            || event.key.code == sf::Keyboard::A) {
+            if (this->inputStruct.left == true) {
+                this->inputStruct.leftReleased = true;
+            }
+            this->inputStruct.left = false;
+        }
+        if (event.key.code == sf::Keyboard::Right
+            || event.key.code == sf::Keyboard::D) {
+            if (this->inputStruct.right == true) {
+                this->inputStruct.rightReleased = true;
+            }
+            this->inputStruct.right = false;
+        }
+        if (event.key.code == sf::Keyboard::Up
+            || event.key.code == sf::Keyboard::W) {
+            if (this->inputStruct.up == true) {
+                this->inputStruct.upReleased = true;
+            }
+            this->inputStruct.up = false;
+        }
+        if (event.key.code == sf::Keyboard::Down
+            || event.key.code == sf::Keyboard::S) {
+            if (this->inputStruct.down == true) {
+                this->inputStruct.downReleased = true;
+            }
+            this->inputStruct.down = false;
+        }
+    }
 }
 
 void Input::clearInput() {

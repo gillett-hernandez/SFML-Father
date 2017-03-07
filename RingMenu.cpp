@@ -1,15 +1,18 @@
 #include "RingMenu.hpp"
 
+RingMenu *RingMenu::s_instance = nullptr;
+
 const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
 const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
 
 static const bool debug = true; 
 
 RingMenu::RingMenu() {
-    this->setInfo(std::string("info!"));
+    this->setInfo(std::string("This is a Ring Menu"));
+    this->setPosition(1920/2,1080/2);
     this->setRadius(100);
-    this->setPosition(10,10);
-    this->setPointCount(5);
+    this->move(-100,-100);
+    this->setPointCount(7);
     this->setOutlineColor(sf::Color(ringColor));
     this->setFillColor(clearColor);
     this->setOutlineThickness(1);

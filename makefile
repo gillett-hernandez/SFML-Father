@@ -9,7 +9,7 @@ run: $(PROJECT)
 $(PROJECT): main.o Info.o RingMenu.o Input.o
 	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
 
-main.o: main.cpp InputListener.hpp
+main.o: main.cpp
 	g++ $(CFLAGS) -c main.cpp
 
 Info.o: Info.cpp Info.hpp 
@@ -18,7 +18,7 @@ Info.o: Info.cpp Info.hpp
 RingMenu.o: RingMenu.cpp RingMenu.hpp
 	g++ $(CFLAGS) -c RingMenu.cpp
 
-Input.o: Input.cpp Input.hpp InputStruct.hpp
+Input.o: Input.cpp Input.hpp InputStruct.hpp InputListener.hpp
 	g++ $(CFLAGS) -c Input.cpp
 
 clean:

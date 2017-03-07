@@ -9,9 +9,8 @@ void Info::setInfo(std::string info) {
 }
 
 Info::Info() {
-
+    this->info = std::string("No info available.");
 }
 
 Info::~Info() {
-
 }
