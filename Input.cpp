@@ -92,7 +92,7 @@ void Input::clearInput() {
     inputStruct.leftReleased = false;
     inputStruct.rightReleased = false;
 }
-void Input::logForInput() {
+void Input::informListeners() {
     if (inputStruct.upPressed) {
         if (debug) {
             std::cout << "upPressed" << std::endl;

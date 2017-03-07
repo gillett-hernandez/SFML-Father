@@ -24,7 +24,7 @@ public:
     void addListener(InputListener *listener);
     void removeListener(InputListener *listener);
     void clearInput();
-    void logForInput();
+    void informListeners();
     
     void upPressed();
     void downPressed();

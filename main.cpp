@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
             }
             input->processEvent(event);
         }
-        input->logForInput();
+        input->informListeners();
         window.clear();
         window.draw(*ring);
         window.display();
