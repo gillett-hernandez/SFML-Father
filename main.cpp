@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
             input->processEvent(event);
         }
         input->informListeners();
-        window.clear();
+        window.clear(sf::Color(0x20,0x00,0x20));
         window.draw(*ring);
         window.display();
     }

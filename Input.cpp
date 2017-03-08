@@ -95,73 +95,73 @@ void Input::clearInput() {
 void Input::informListeners() {
     if (inputStruct.upPressed) {
         if (debug) {
-            std::cout << "upPressed" << std::endl;
+            std::cout << "Input::upPressed" << std::endl;
         }
         this->upPressed();
     }
     if (inputStruct.leftPressed) {
         if (debug) {
-            std::cout << "leftPressed" << std::endl;
+            std::cout << "Input::leftPressed" << std::endl;
         }
         this->leftPressed();
     }
     if (inputStruct.downPressed) {
         if (debug) {
-            std::cout << "downPressed" << std::endl;
+            std::cout << "Input::downPressed" << std::endl;
         }
         this->downPressed();
     }
     if (inputStruct.rightPressed) {
         if (debug) {
-            std::cout << "rightPressed" << std::endl;
+            std::cout << "Input::rightPressed" << std::endl;
         }
         this->rightPressed();
     }
     if (inputStruct.up) {
         if (debug) {
-            std::cout << "up" << std::endl;
+            std::cout << "Input::up" << std::endl;
         }
         this->up();
     }
     if (inputStruct.left) {
         if (debug) {
-            std::cout << "left" << std::endl;
+            std::cout << "Input::left" << std::endl;
         }
         this->left();
     }
     if (inputStruct.down) {
         if (debug) {
-            std::cout << "down" << std::endl;
+            std::cout << "Input::down" << std::endl;
         }
         this->down();
     }
     if (inputStruct.right) {
         if (debug) {
-            std::cout << "right" << std::endl;
+            std::cout << "Input::right" << std::endl;
         }
         this->right();
     }
     if (inputStruct.upReleased) {
         if (debug) {
-            std::cout << "upReleased" << std::endl;
+            std::cout << "Input::upReleased" << std::endl;
         }
         this->upPressed();
     }
     if (inputStruct.leftReleased) {
         if (debug) {
-            std::cout << "leftReleased" << std::endl;
+            std::cout << "Input::leftReleased" << std::endl;
         }
         this->leftReleased();
     }
     if (inputStruct.rightReleased) {
         if (debug) {
-            std::cout << "rightReleased" << std::endl;
+            std::cout << "Input::rightReleased" << std::endl;
         }
         this->rightReleased();
     }
     if (inputStruct.downReleased) {
         if (debug) {
-            std::cout << "downReleased" << std::endl;
+            std::cout << "Input::downReleased" << std::endl;
         }
         this->downReleased();
     }
