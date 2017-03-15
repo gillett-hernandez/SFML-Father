@@ -13,6 +13,7 @@ struct INPUT_STRUCT {
         bool downReleased = false;
         bool leftReleased = false;
         bool rightReleased = false;
+        bool enterPressed = false;
     };
 typedef INPUT_STRUCT InputStruct;
 #endif

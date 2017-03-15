@@ -49,6 +49,9 @@ void Input::processEvent(sf::Event &event) {
             }
             this->inputStruct.down = true;
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            this->inputStruct.enterPressed = true;
+        }
     } else if (event.type == sf::Event::KeyReleased) {
         if (event.key.code == sf::Keyboard::Left
             || event.key.code == sf::Keyboard::A) {
@@ -91,6 +94,7 @@ void Input::clearInput() {
     inputStruct.downReleased = false;
     inputStruct.leftReleased = false;
     inputStruct.rightReleased = false;
+    inputStruct.enterPressed = false;
 }
 void Input::informListeners() {
     if (inputStruct.upPressed) {
@@ -145,7 +149,7 @@ void Input::informListeners() {
         if (debug) {
             std::cout << "Input::upReleased" << std::endl;
         }
-        this->upPressed();
+        this->upReleased();
     }
     if (inputStruct.leftReleased) {
         if (debug) {
@@ -164,6 +168,12 @@ void Input::informListeners() {
             std::cout << "Input::downReleased" << std::endl;
         }
         this->downReleased();
+    }
+    if (inputStruct.enterPressed) {
+        if (debug) {
+            std::cout << "Input::enterPressed" << std::endl;
+        }
+        this->enterPressed();
     }
 }
 
@@ -228,5 +238,11 @@ void Input::left() {
 void Input::right() {
     for (InputListener *listener : listeners) {
         listener->right();
+    }
+}
+
+void Input::enterPressed() {
+    for (InputListener *listener : listeners) {
+        listener->enterPressed();
     }
 }

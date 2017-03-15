@@ -1,6 +1,5 @@
 #ifndef INPUTLISTENER_H
 #define INPUTLISTENER_H
-#include <iostream>
 class InputListener
 {
 public:
@@ -18,6 +17,8 @@ public:
     virtual void down() = 0;
     virtual void left() = 0;
     virtual void right() = 0;
+
+    virtual void enterPressed() = 0;
 };
 
 #endif
