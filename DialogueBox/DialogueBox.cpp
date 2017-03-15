@@ -4,7 +4,7 @@ DialogueBox *DialogueBox::s_instance = nullptr;
 DialogueBox *window_ref = nullptr;
 
 static const bool debug = false;
-static const int padding = 32;
+static const int padding = 64;
 static const int boxHeight = ScreenHeight*.33333;
 
 DialogueBox::DialogueBox() {
@@ -19,7 +19,7 @@ DialogueBox::DialogueBox() {
     this->text.setStyle(sf::Text::Regular);
     this->text.setOutlineColor(sf::Color::Blue);
     this->text.setFillColor(sf::Color::White);
-    this->text.setPosition(sf::Vector2f(padding,this->getPosition().y+padding));
+    this->text.setPosition(sf::Vector2f(padding,this->getPosition().y+padding-(this->text.getCharacterSize()/2)));
 }
 
 DialogueBox::~DialogueBox() {
@@ -62,14 +62,17 @@ void DialogueBox::setString(std::string newString) {
             // set the text string to the new string
             this->text.setString(newString);
         }
+    }
+    for (std::string::size_type i = 0; i < newString.size(); ++i) {
+        sf::Vector2f v2 = this->text.findCharacterPos(i);
         // if the character is past the screen bottom
         if (v2.y > bottom-padding-this->text.getCharacterSize()) {
             // create the next page out of the string that is too far
             std::string newPage = newString.substr(i, newString.size()-i);
             // trim the extraneous characters from newString
             newString.erase(i, newString.size()-i);
-            // set the member variable nextPage to newPage
-            this->nextPage = newPage;
+            // set the member variable queue to newPage
+            this->queue = newPage;
             // set the text to new string.
             this->text.setString(newString);
             // break out of the loop
@@ -77,7 +80,7 @@ void DialogueBox::setString(std::string newString) {
         } else {
             // if there are no trailing characters, set member variable newPage to an empty string
             // this is so the dialoge box knows that it's rendered all of the text.
-            this->nextPage = "";
+            this->queue = "";
         }
     }
 }
@@ -91,9 +94,8 @@ void DialogueBox::downPressed() {
     if (debug) {
         std::cout << "DialogueBox::downPressed" << std::endl;
     }
-    if (this->nextPage.size() > 1) {
-        this->currentPage++;
-        this->setString(this->nextPage);
+    if (this->queue.size() > 1) {
+        this->setString(this->queue);
     } else {
         //this->setString("");
         this->hide();

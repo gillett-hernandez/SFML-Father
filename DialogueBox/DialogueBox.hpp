@@ -12,8 +12,8 @@ private:
     static DialogueBox *s_instance;
     sf::Font font;
     sf::Text text;
-    std::string nextPage;
-    size_t currentPage = 0;
+    std::string queue;
+    //size_t currentPage = 0;
     void setString(std::string);
 public:
     ~DialogueBox();
