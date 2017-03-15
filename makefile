@@ -6,8 +6,8 @@ all:
 run: $(PROJECT)
 	./$(PROJECT) $(PROJECT)
 
-$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o
-	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
+$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o
+	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp FatherDrawable.hpp
 	g++ $(CFLAGS) -c main.cpp
@@ -17,9 +17,6 @@ Info.o: Info/Info.cpp Info/Info.hpp
 
 RingMenu.o: RingMenu/RingMenu.cpp RingMenu/RingMenu.hpp
 	g++ $(CFLAGS) -c RingMenu/RingMenu.cpp
-
-RingMenuItem.o: RingMenu/RingMenuItem.cpp RingMenu/RingMenuItem.hpp
-	g++ $(CFLAGS) -c RingMenu/RingMenuItem.cpp
 
 Input.o: Input/Input.cpp Input/Input.hpp Input/InputStruct.hpp Input/InputListener.hpp
 	g++ $(CFLAGS) -c Input/Input.cpp

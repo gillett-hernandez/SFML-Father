@@ -13,8 +13,8 @@ private:
     sf::Font font;
     sf::Text text;
     std::string queue;
+    //size_t currentPage = 0;
     void setString(std::string);
-    void hide();
 public:
     ~DialogueBox();
     static DialogueBox *instance() {
@@ -24,6 +24,7 @@ public:
         return s_instance;
     }
     void show(std::string string);
+    void hide();
 
     void upPressed() override;
     void downPressed() override;
