@@ -28,21 +28,7 @@ int main(int argc, char const *argv[]) {
 
     input->addListener(ring);
     input->addListener(dialogueBox);
-    dialogueBox->show("A morphable polygon has appeared\n"
-        "It asks your name...?\n"
-        "and it asks again..\n"
-        "and again...\n"
-        "and again...\n"
-        "and again..\n"
-        "test banana monkey money hella\n"
-        " cash \n"
-        " CA$H!!!!\n"
-        "no no no no yes no\n"
-        " cant stop wont stop ding dong.\n"
-        "witch is dead.\n"
-        " which will you choose, how long will it take\n"
-        "go eat an apple or a banana stop asking me questions\n"
-        "hello my name is a robots bot row.");
+    dialogueBox->show("one\ntwo two\nthree three three\nfour four four four\nfive five five five five\nsix six six six six six\nseven seven seven seven seven seven seven\neight eight eight eight eight eight eight eight\nnine nine nine nine nine nine nine nine nine\nten ten ten ten ten ten ten ten ten ten\neleven eleven eleven eleven eleven eleven eleven eleven eleven eleven eleven\ntwelve twelve twelve twelve twelve twelve twelve twelve twelve twelve twelve twelve\nthirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen thirteen\nfourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen fourteen");
     while (window.isOpen()) {
         input->clearInput();
         sf::Event event;

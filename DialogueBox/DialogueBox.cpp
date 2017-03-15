@@ -40,31 +40,46 @@ void DialogueBox::hide() {
 void DialogueBox::setString(std::string newString) {
     this->text.setString(newString);
     //std::string str = this->text.getString();
-
+    sf::Vector2f position = this->getPosition();
+    sf::Vector2f size = this->getSize();
+    auto bottom = position.y+size.y;
+    auto right = position.x+size.x;
     // loop through the entire new string
     for (std::string::size_type i = 0; i < newString.size(); ++i) {
         // get the xy position of the character at index i
         sf::Vector2f v2 = this->text.findCharacterPos(i);
         // if the character is past the screen padding
-        if (v2.y > ScreenHeight-padding) {
-            std::string newPage = newString.substr(i, newString.size()-i);
-            newString.erase(i, newString.size()-i);
-            this->nextPage = newPage;
-            break;
-        } else {
-            this->nextPage = "";
-        }
-        if (v2.x > ScreenWidth-padding) {
+        if (v2.x > right-padding) {
+            //loop throuhg in reverse and find a white space character
             for (std::string::size_type j = i; j > 0; j--) {
+                // replace the white space with a new line
                 if (newString[j] == ' ') {
                     newString[j] = '\n';
+                    // break out of the loop
                     break;
                 }
             }
+            // set the text string to the new string
             this->text.setString(newString);
         }
+        // if the character is past the screen bottom
+        if (v2.y > bottom-padding-this->text.getCharacterSize()) {
+            // create the next page out of the string that is too far
+            std::string newPage = newString.substr(i, newString.size()-i);
+            // trim the extraneous characters from newString
+            newString.erase(i, newString.size()-i);
+            // set the member variable nextPage to newPage
+            this->nextPage = newPage;
+            // set the text to new string.
+            this->text.setString(newString);
+            // break out of the loop
+            break;
+        } else {
+            // if there are no trailing characters, set member variable newPage to an empty string
+            // this is so the dialoge box knows that it's rendered all of the text.
+            this->nextPage = "";
+        }
     }
-    std::cout << "nextPage count " << this->nextPage.size() << std::endl;
 }
 
 void DialogueBox::upPressed() {
