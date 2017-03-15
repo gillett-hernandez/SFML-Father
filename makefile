@@ -6,20 +6,26 @@ all:
 run: $(PROJECT)
 	./$(PROJECT) $(PROJECT)
 
-$(PROJECT): main.o Info.o RingMenu.o Input.o
-	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
+$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o
+	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
 
-main.o: main.cpp
+main.o: main.cpp FatherDrawable.hpp
 	g++ $(CFLAGS) -c main.cpp
 
-Info.o: Info.cpp Info.hpp 
-	g++ $(CFLAGS) -c Info.cpp
+Info.o: Info/Info.cpp Info/Info.hpp 
+	g++ $(CFLAGS) -c Info/Info.cpp
 
-RingMenu.o: RingMenu.cpp RingMenu.hpp
-	g++ $(CFLAGS) -c RingMenu.cpp
+RingMenu.o: RingMenu/RingMenu.cpp RingMenu/RingMenu.hpp
+	g++ $(CFLAGS) -c RingMenu/RingMenu.cpp
 
-Input.o: Input.cpp Input.hpp InputStruct.hpp InputListener.hpp
-	g++ $(CFLAGS) -c Input.cpp
+Input.o: Input/Input.cpp Input/Input.hpp Input/InputStruct.hpp Input/InputListener.hpp
+	g++ $(CFLAGS) -c Input/Input.cpp
+
+DialogueBox.o: DialogueBox/DialogueBox.cpp DialogueBox/DialogueBox.hpp
+	g++ $(CFLAGS) -c DialogueBox/DialogueBox.cpp
+
+ScreenManager.o: ScreenManager/ScreenManager.cpp ScreenManager/ScreenManager.hpp
+	g++ $(CFLAGS) -c ScreenManager/ScreenManager.cpp
 
 clean:
 	rm *.o

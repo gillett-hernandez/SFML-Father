@@ -41,6 +41,8 @@ public:
     void left();
     void right();
 
+    void enterPressed();
+
     void processEvent(sf::Event &event);
 };
 
