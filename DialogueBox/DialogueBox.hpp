@@ -14,9 +14,7 @@ private:
     sf::Text text;
     std::string nextPage;
     size_t currentPage = 0;
-    std::string wrapString(std::string string);
-    void show(std::string string);
-    void hide();
+    void setString(std::string);
 public:
     ~DialogueBox();
     static DialogueBox *instance() {
@@ -25,8 +23,8 @@ public:
         }
         return s_instance;
     }
-    
-    void setString(std::string);
+    void show(std::string string);
+    void hide();
 
     void upPressed() override;
     void downPressed() override;

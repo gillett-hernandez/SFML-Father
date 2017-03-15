@@ -13,6 +13,7 @@ DialogueBox::DialogueBox() {
     this->setFillColor(sf::Color::Black);
 
     this->font.loadFromFile("Fonts/futrfw.ttf");
+    
     this->text.setFont(font);
     this->text.setCharacterSize(boxHeight/8);
     this->text.setStyle(sf::Text::Regular);
@@ -46,7 +47,6 @@ void DialogueBox::setString(std::string newString) {
         sf::Vector2f v2 = this->text.findCharacterPos(i);
         // if the character is past the screen padding
         if (v2.y > ScreenHeight-padding) {
-            //std::cout << "too tall!!";
             std::string newPage = newString.substr(i, newString.size()-i);
             newString.erase(i, newString.size()-i);
             this->nextPage = newPage;

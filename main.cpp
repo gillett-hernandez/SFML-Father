@@ -28,7 +28,7 @@ int main(int argc, char const *argv[]) {
 
     input->addListener(ring);
     input->addListener(dialogueBox);
-    dialogueBox->setString("A morphable polygon has appeared\n"
+    dialogueBox->show("A morphable polygon has appeared\n"
         "It asks your name...?\n"
         "and it asks again..\n"
         "and again...\n"
