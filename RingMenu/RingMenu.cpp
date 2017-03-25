@@ -9,9 +9,9 @@ static const bool debug = false;
 
 RingMenu::RingMenu() {
     this->setInfo(std::string("This is a Ring Menu"));
-    this->setPosition(ScreenWidth/2,ScreenHeight/2);
-    this->setRadius(ScreenHeight/8);
-    this->move(-ScreenHeight/8,-ScreenHeight/8);
+    this->setPosition(ScreenManager::screenWidth()/2,ScreenManager::screenHeight()/2);
+    this->setRadius(ScreenManager::screenHeight()/8);
+    this->move(-ScreenManager::screenHeight()/8,-ScreenManager::screenHeight()/8);
     this->setPointCount(3);
     this->setOutlineColor(sf::Color(ringColor));
     this->setFillColor(clearColor);
