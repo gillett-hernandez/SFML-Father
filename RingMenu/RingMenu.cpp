@@ -11,15 +11,15 @@ const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
 static const bool debug = false; 
 
 RingMenu::RingMenu() {
-    float radius = ScreenHeight/8;
+    float radius = ScreenManager::screenHeight()/8;
     rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
 
     this->setOrigin(radius/2, radius/2);
-    this->setPosition(ScreenWidth/2,ScreenHeight/2);
-    
-    this->setRadius(radius);
-    this->move(-ScreenHeight/8,-ScreenHeight/8);
+    this->setPosition(ScreenManager::screenWidth()/2,ScreenManager::screenHeight()/2);
+    this->setRadius(ScreenManager::screenHeight()/8);
+    this->move(-ScreenManager::screenHeight()/8,-ScreenManager::screenHeight()/8);
+
     this->setPointCount(3);
     this->setOutlineColor(sf::Color(ringColor));
     this->setFillColor(clearColor);
@@ -105,8 +105,8 @@ void RingMenu::left() {
     sf::Vector2f pos;
     //float angle = 45.0f;
     rad += 0.1f;
-    pos.x = this->getPosition().x + ((ScreenHeight/8) * cos(rad));
-    pos.y = this->getPosition().y + ((ScreenHeight/8) * sin(rad));
+    pos.x = this->getPosition().x + ((ScreenManager::screenHeight()/8) * cos(rad));
+    pos.y = this->getPosition().y + ((ScreenManager::screenHeight()/8) * sin(rad));
 
 //    pos.x = this->getPosition().x;// + radius * cos(1);
 //    pos.y = this->getPosition().y;// + radius * sin(1);

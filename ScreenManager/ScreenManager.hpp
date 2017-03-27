@@ -1,7 +1,8 @@
 #ifndef SCREENMANAGER_H
 #define SCREENMANAGER_H
-extern const int ScreenWidth;
-extern const int ScreenHeight;
+#include <SFML/Window.hpp>
+//extern const int ScreenWidth;
+//extern const int ScreenHeight;
 
 class ScreenManager
 {
@@ -16,11 +17,11 @@ public:
         }
         return s_instance;
     }
-    // static int screenWidth() {
-    //     return 1920;
-    // }
-    // static int screenHeight() {
-    //     return 1080;
-    // }
+    static int screenWidth() {
+        return sf::VideoMode::getDesktopMode().width;
+    }
+    static int screenHeight() {
+        return sf::VideoMode::getDesktopMode().height;
+    }
 };
 #endif
