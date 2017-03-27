@@ -1,22 +1,32 @@
 #include "RingMenu.hpp"
+#include <cmath>
+#include "../TextureManager/TextureManager.hpp"
 
 RingMenu *RingMenu::s_instance = nullptr;
 
 const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
 const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
+//const double pi = 3.141592653589793;
 
 static const bool debug = false; 
 
 RingMenu::RingMenu() {
+    float radius = ScreenHeight/8;
+    rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
+
+    this->setOrigin(radius/2, radius/2);
     this->setPosition(ScreenWidth/2,ScreenHeight/2);
-    this->setRadius(ScreenHeight/8);
+    
+    this->setRadius(radius);
     this->move(-ScreenHeight/8,-ScreenHeight/8);
     this->setPointCount(3);
     this->setOutlineColor(sf::Color(ringColor));
     this->setFillColor(clearColor);
     this->setOutlineThickness(1);
-    this->hidden = true;
+    //this->hidden = true;
+    RingMenuItem item = RingMenuItem(RingMenuItemTypeWeapon);
+    this->items.push_back(item);
 }
 
 RingMenu::~RingMenu() {
@@ -39,15 +49,10 @@ void RingMenu::upPressed() {
     if (debug) {
         std::cout << "RingMenu::upPressed" << std::endl;
     }
-    this->setPointCount(this->getPointCount()+1);
 }
 void RingMenu::downPressed() {
     if (debug) {
         std::cout << "RingMenu::downPressed" << std::endl;
-    }
-    int pointCount = this->getPointCount();
-    if (pointCount > 3) {
-        this->setPointCount(this->getPointCount()-1);
     }
 }
 void RingMenu::leftPressed() {
@@ -86,25 +91,34 @@ void RingMenu::up() {
     if (debug) {
         std::cout << "RingMenu::up" << std::endl;
     }
-    this->move(0, -5);
 }
 void RingMenu::down() {
     if (debug) {
         std::cout << "RingMenu::down" << std::endl;
     }
-    this->move(0, 5);
 }
 void RingMenu::left() {
     if (debug) {
         std::cout << "RingMenu::left" << std::endl;
     }
-    this->move(-5, 0);
+
+    sf::Vector2f pos;
+    //float angle = 45.0f;
+    rad += 0.1f;
+    pos.x = this->getPosition().x + ((ScreenHeight/8) * cos(rad));
+    pos.y = this->getPosition().y + ((ScreenHeight/8) * sin(rad));
+
+//    pos.x = this->getPosition().x;// + radius * cos(1);
+//    pos.y = this->getPosition().y;// + radius * sin(1);
+
+    this->items[0].setPosition(pos);
+
+    std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
 }
 void RingMenu::right() {
     if (debug) {
         std::cout << "RingMenu::right" << std::endl;
     }
-    this->move(5, 0);
 }
 
 void RingMenu::enterPressed() {
@@ -117,6 +131,9 @@ void RingMenu::enterPressed() {
 
 void RingMenu::drawToWindow(sf::RenderWindow &windowRef) {
     windowRef.draw(*this);
+    for (RingMenuItem item: this->items) {
+        item.drawToWindow(windowRef);
+    }
 }
 
 void RingMenu::toggleHidden() {

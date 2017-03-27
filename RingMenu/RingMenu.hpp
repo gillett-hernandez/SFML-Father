@@ -1,6 +1,7 @@
 #ifndef RINGMENU_H
 #define RINGMENU_H
 #include <SFML/Graphics.hpp>
+#include "RingMenuItem.hpp"
 #include "../Info/Info.hpp"
 #include "../Input/Input.hpp"
 #include "../FatherDrawable.hpp"
@@ -11,6 +12,8 @@ private:
     RingMenu();
     static RingMenu *s_instance;
     bool hidden;
+    std::vector<RingMenuItem> items;
+    float rad;
 public:
     static RingMenu *instance() {
         if (!s_instance) {

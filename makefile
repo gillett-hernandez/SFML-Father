@@ -6,8 +6,8 @@ all:
 run: $(PROJECT)
 	./$(PROJECT) $(PROJECT)
 
-$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o
-	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
+$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o
+	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o -o $(PROJECT) -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp FatherDrawable.hpp
 	g++ $(CFLAGS) -c main.cpp
@@ -29,6 +29,9 @@ DialogueBox.o: DialogueBox/DialogueBox.cpp DialogueBox/DialogueBox.hpp
 
 ScreenManager.o: ScreenManager/ScreenManager.cpp ScreenManager/ScreenManager.hpp
 	g++ $(CFLAGS) -c ScreenManager/ScreenManager.cpp
+
+TextureManager.o: TextureManager/TextureManager.cpp TextureManager/TextureManager.hpp
+	g++ $(CFLAGS) -c TextureManager/TextureManager.cpp
 
 clean:
 	rm *.o

@@ -12,10 +12,10 @@ DialogueBox::DialogueBox() {
     this->setSize(sf::Vector2f(ScreenWidth,boxHeight));
     this->setFillColor(sf::Color::Black);
 
-    this->font.loadFromFile("Fonts/futrfw.ttf");
+    this->font.loadFromFile("Fonts/fragmentcore.otf");
     
     this->text.setFont(font);
-    this->text.setCharacterSize(boxHeight/8);
+    this->text.setCharacterSize(35);
     this->text.setStyle(sf::Text::Regular);
     this->text.setOutlineColor(sf::Color::Blue);
     this->text.setFillColor(sf::Color::White);
