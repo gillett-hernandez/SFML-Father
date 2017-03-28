@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
     if (debug) {
         logArgs(argc, argv);
     }
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), argv[1], sf::Style::Fullscreen|sf::Style::Resize);
+    sf::RenderWindow window(sf::VideoMode(ScreenManager::screenWidth(), ScreenManager::screenHeight()), argv[1]/*, /*sf::Style::Fullscreen|sf::Style::Resize*/);
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
 

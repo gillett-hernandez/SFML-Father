@@ -3,6 +3,8 @@
 #include <SFML/Window.hpp>
 //extern const int ScreenWidth;
 //extern const int ScreenHeight;
+extern const float multiplier;
+
 
 class ScreenManager
 {
@@ -18,10 +20,10 @@ public:
         return s_instance;
     }
     static int screenWidth() {
-        return sf::VideoMode::getDesktopMode().width;
+        return sf::VideoMode::getDesktopMode().width * multiplier;
     }
     static int screenHeight() {
-        return sf::VideoMode::getDesktopMode().height;
+        return sf::VideoMode::getDesktopMode().height * multiplier;
     }
 };
 #endif
