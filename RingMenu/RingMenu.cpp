@@ -15,9 +15,9 @@ RingMenu::RingMenu() {
     rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
 
-    this->setOrigin(radius/2, radius/2);
+    //this->setOrigin(radius/2, radius/2);
     this->setPosition(ScreenManager::screenWidth()/2,ScreenManager::screenHeight()/2);
-    this->setRadius(ScreenManager::screenHeight()/8);
+    this->setRadius(radius);
     this->move(-ScreenManager::screenHeight()/8,-ScreenManager::screenHeight()/8);
 
     this->setPointCount(3);
@@ -25,7 +25,7 @@ RingMenu::RingMenu() {
     this->setFillColor(clearColor);
     this->setOutlineThickness(1);
     //this->hidden = true;
-    RingMenuItem item = RingMenuItem(RingMenuItemTypeWeapon);
+    RingMenuItem item = RingMenuItem(this, RingMenuItemTypeWeapon);
     this->items.push_back(item);
 }
 
@@ -104,9 +104,10 @@ void RingMenu::left() {
 
     sf::Vector2f pos;
     //float angle = 45.0f;
-    rad += 0.1f;
-    pos.x = this->getPosition().x + ((ScreenManager::screenHeight()/8) * cos(rad));
-    pos.y = this->getPosition().y + ((ScreenManager::screenHeight()/8) * sin(rad));
+    // ftfy. angles were reversed, left went clockwise when its supposed to go counterclockwise - gillett
+    rad -= 0.05f;
+    pos.x = this->getPosition().x + (this->getRadius() * cos(rad));
+    pos.y = this->getPosition().y + (this->getRadius() * sin(rad));
 
 //    pos.x = this->getPosition().x;// + radius * cos(1);
 //    pos.y = this->getPosition().y;// + radius * sin(1);
@@ -119,6 +120,19 @@ void RingMenu::right() {
     if (debug) {
         std::cout << "RingMenu::right" << std::endl;
     }
+
+    sf::Vector2f pos;
+    //float angle = 45.0f;
+    rad += 0.05f;
+    pos.x = this->getPosition().x + (this->getRadius() * cos(rad));
+    pos.y = this->getPosition().y + (this->getRadius() * sin(rad));
+
+//    pos.x = this->getPosition().x;// + radius * cos(1);
+//    pos.y = this->getPosition().y;// + radius * sin(1);
+
+    this->items[0].setPosition(pos);
+
+    std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
 }
 
 void RingMenu::enterPressed() {

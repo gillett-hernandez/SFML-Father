@@ -7,6 +7,8 @@
 #include "../FatherDrawable.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
 
+class RingMenuItem;
+
 class RingMenu: public sf::CircleShape, public Info, public InputListener, public FatherDrawable {
 private:
     RingMenu();
