@@ -13,7 +13,7 @@ RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     this->parent = parent;
     //this->setColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
     //this->setPosition(100, 100);
-    float v = this->parent->getRadius() - this->parent->getPosition().x;
+    //float v = this->parent->getRadius() - this->parent->getPosition().x;
     // for some reason 23 seems to be the magic value. 2 minutes later - its because 24.04 = 17*sqrt(2)
     float origin = (this->parent->getPosition().x + this->parent->getRadius())/sqrt(2) - this->parent->getPosition().x - 24.04;
     this->setOrigin(origin, origin);
