@@ -17,9 +17,9 @@ RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     // for some reason 23 seems to be the magic value. 2 minutes later - its because 24.04 = 17*sqrt(2)
     float origin = (this->parent->getPosition().x + this->parent->getRadius())/sqrt(2) - this->parent->getPosition().x - 24.04;
     this->setOrigin(origin, origin);
-    std::cout << "-----" << sqrt(2)*(-34*v + this->parent->getPosition().x) << "-----" << std::endl;
-    std::cout << "-----" << origin << "-----" << std::endl;
-    std::cout << "-----" << this->parent->getPosition().x + this->parent->getRadius() << "-----" << std::endl;
+    //std::cout << "-----" << sqrt(2)*(-34*v + this->parent->getPosition().x) << "-----" << std::endl;
+    //std::cout << "-----" << origin << "-----" << std::endl;
+    //std::cout << "-----" << this->parent->getPosition().x + this->parent->getRadius() << "-----" << std::endl;
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
     this->setType(type);
     std::cout << type;
