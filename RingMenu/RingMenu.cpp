@@ -6,7 +6,9 @@ RingMenu *RingMenu::s_instance = nullptr;
 
 const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
 const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
-//const double pi = 3.141592653589793;
+
+const double pi = 3.141592653589793;
+const double rad_max = pi * 2.0f;
 
 static const bool debug = false; 
 
@@ -26,7 +28,9 @@ RingMenu::RingMenu() {
     this->setOutlineThickness(1);
     //this->hidden = true;
     RingMenuItem item = RingMenuItem(this, RingMenuItemTypeWeapon);
+    RingMenuItem armor = RingMenuItem(this, RingMenuItemTypeArmor);
     this->items.push_back(item);
+    this->items.push_back(armor);
 }
 
 RingMenu::~RingMenu() {
@@ -111,8 +115,13 @@ void RingMenu::left() {
 
 //    pos.x = this->getPosition().x;// + radius * cos(1);
 //    pos.y = this->getPosition().y;// + radius * sin(1);
+    float rad2 = rad + (rad_max / this->items.size());
+    sf::Vector2f pos2;
+    pos2.x = this->getPosition().x + (this->getRadius() * cos(rad2));
+    pos2.y = this->getPosition().y + (this->getRadius() * sin(rad2));
 
     this->items[0].setPosition(pos);
+    this->items[1].setPosition(pos2);
 
     std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
 }
@@ -129,8 +138,13 @@ void RingMenu::right() {
 
 //    pos.x = this->getPosition().x;// + radius * cos(1);
 //    pos.y = this->getPosition().y;// + radius * sin(1);
+    float rad2 = rad + (rad_max / this->items.size());
+    sf::Vector2f pos2;
+    pos2.x = this->getPosition().x + (this->getRadius() * cos(rad2));
+    pos2.y = this->getPosition().y + (this->getRadius() * sin(rad2));
 
     this->items[0].setPosition(pos);
+    this->items[1].setPosition(pos2);
 
     std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
 }

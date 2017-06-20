@@ -7,6 +7,9 @@
 #include "../FatherDrawable.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
 
+extern const double pi;
+extern const double rad_max;
+
 class RingMenuItem;
 
 class RingMenu: public sf::CircleShape, public Info, public InputListener, public FatherDrawable {

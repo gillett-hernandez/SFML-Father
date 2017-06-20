@@ -3,14 +3,15 @@
 #include "../TextureManager/TextureManager.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
 RingMenuItem::RingMenuItem() {
-    this->setColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
+    //this->setColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
     //this->setPosition(100, 100);
     //this->setOrigin(-34-34-17,-34-34-17);
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
+    this->setType(RingMenuItemTypeItem);
 }
 RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     this->parent = parent;
-    this->setColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
+    //this->setColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
     //this->setPosition(100, 100);
     float v = this->parent->getRadius() - this->parent->getPosition().x;
     // for some reason 23 seems to be the magic value. 2 minutes later - its because 24.04 = 17*sqrt(2)
@@ -29,7 +30,7 @@ void RingMenuItem::setType(RingMenuItemType type) {
             break;
         }
         case RingMenuItemTypeArmor: {
-            this->setTextureRect(sf::IntRect(34*4, 0, 34, 34));
+            this->setTextureRect(sf::IntRect(34*4, 34*5, 34, 34));
             break;
         }
         case RingMenuItemTypeWeapon: {
