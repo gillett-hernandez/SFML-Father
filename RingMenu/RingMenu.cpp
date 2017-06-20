@@ -29,8 +29,10 @@ RingMenu::RingMenu() {
     //this->hidden = true;
     RingMenuItem item = RingMenuItem(this, RingMenuItemTypeWeapon);
     RingMenuItem armor = RingMenuItem(this, RingMenuItemTypeArmor);
+    RingMenuItem shield = RingMenuItem(this, RingMenuItemTypeItem);
     this->items.push_back(item);
     this->items.push_back(armor);
+    this->items.push_back(shield);
 }
 
 RingMenu::~RingMenu() {
@@ -106,47 +108,29 @@ void RingMenu::left() {
         std::cout << "RingMenu::left" << std::endl;
     }
 
-    sf::Vector2f pos;
-    //float angle = 45.0f;
-    // ftfy. angles were reversed, left went clockwise when its supposed to go counterclockwise - gillett
     rad -= 0.05f;
-    pos.x = this->getPosition().x + (this->getRadius() * cos(rad));
-    pos.y = this->getPosition().y + (this->getRadius() * sin(rad));
 
-//    pos.x = this->getPosition().x;// + radius * cos(1);
-//    pos.y = this->getPosition().y;// + radius * sin(1);
-    float rad2 = rad + (rad_max / this->items.size());
-    sf::Vector2f pos2;
-    pos2.x = this->getPosition().x + (this->getRadius() * cos(rad2));
-    pos2.y = this->getPosition().y + (this->getRadius() * sin(rad2));
-
-    this->items[0].setPosition(pos);
-    this->items[1].setPosition(pos2);
-
-    std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
+    for (size_t i = 0; i < this->items.size(); i++) {
+        sf::Vector2f pos;
+        pos.x = this->getPosition().x + (this->getRadius()) * cos(rad + ((rad_max / this->items.size()) * i));
+        pos.y = this->getPosition().y + (this->getRadius()) * sin(rad + ((rad_max / this->items.size()) * i));
+        this->items[i].setPosition(pos);
+    }
+       
 }
 void RingMenu::right() {
     if (debug) {
         std::cout << "RingMenu::right" << std::endl;
     }
 
-    sf::Vector2f pos;
-    //float angle = 45.0f;
     rad += 0.05f;
-    pos.x = this->getPosition().x + (this->getRadius() * cos(rad));
-    pos.y = this->getPosition().y + (this->getRadius() * sin(rad));
 
-//    pos.x = this->getPosition().x;// + radius * cos(1);
-//    pos.y = this->getPosition().y;// + radius * sin(1);
-    float rad2 = rad + (rad_max / this->items.size());
-    sf::Vector2f pos2;
-    pos2.x = this->getPosition().x + (this->getRadius() * cos(rad2));
-    pos2.y = this->getPosition().y + (this->getRadius() * sin(rad2));
-
-    this->items[0].setPosition(pos);
-    this->items[1].setPosition(pos2);
-
-    std::cout << "pos.x " << pos.x << "pos.y " << pos.y << std::endl;
+    for (size_t i = 0; i < this->items.size(); i++) {
+        sf::Vector2f pos;
+        pos.x = this->getPosition().x + (this->getRadius()) * cos(rad + ((rad_max / this->items.size()) * i));
+        pos.y = this->getPosition().y + (this->getRadius()) * sin(rad + ((rad_max / this->items.size()) * i));
+        this->items[i].setPosition(pos);
+    }
 }
 
 void RingMenu::enterPressed() {

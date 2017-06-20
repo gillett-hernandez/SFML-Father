@@ -22,6 +22,7 @@ RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     std::cout << "-----" << this->parent->getPosition().x + this->parent->getRadius() << "-----" << std::endl;
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
     this->setType(type);
+    std::cout << type;
 }
 void RingMenuItem::setType(RingMenuItemType type) {
     this->type = type;
@@ -38,7 +39,7 @@ void RingMenuItem::setType(RingMenuItemType type) {
             break;
         }
         case RingMenuItemTypeItem: {
-            this->setTextureRect(sf::IntRect(34*6, 0, 34, 34));
+            this->setTextureRect(sf::IntRect(34*6, 34*5, 34, 34));
             break;
         }
         default: {
@@ -52,8 +53,8 @@ RingMenuItem::~RingMenuItem() {
 }
 void RingMenuItem::drawToWindow(sf::RenderWindow &windowRef) {
     windowRef.draw(*this);
-    sf::RectangleShape rect = sf::RectangleShape();
-    rect.setSize(sf::Vector2f(34,34));
-    rect.setPosition(this->getPosition());
-    windowRef.draw(rect);
+    //sf::RectangleShape rect = sf::RectangleShape();
+    //rect.setSize(sf::Vector2f(34,34));
+    //rect.setPosition(this->getPosition());
+    //windowRef.draw(rect);
 }
