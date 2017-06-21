@@ -9,7 +9,7 @@ RingMenuItem::RingMenuItem() {
 RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     this->parent = parent;
     float radius = this->parent->getRadius();
-    float origin = (this->parent->getPosition().x + radius)/sqrt(2) - this->parent->getPosition().x - (17 * sqrt(2));
+    float origin = (this->parent->getPosition().x + radius)/sqrt(2) - this->parent->getPosition().x - (17 * sqrt(2)); //17 is 34 / 2, 34 is the width of the tiles in the sprite tileset
     this->setOrigin(origin, origin);
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
     this->setType(type);
