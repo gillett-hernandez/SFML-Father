@@ -18,9 +18,12 @@ RingMenu::RingMenu() {
     this->setInfo(std::string("This is a Ring Menu"));
 
     //this->setOrigin(radius/2, radius/2);
-    this->setPosition(ScreenManager::screenWidth()/2,ScreenManager::screenHeight()/2);
+    int screenWidth = ScreenManager::screenWidth();
+    int screenHeight = ScreenManager::screenHeight();
+    
+    this->setPosition(screenWidth/2,screenHeight/2);
     this->setRadius(radius);
-    this->move(-ScreenManager::screenHeight()/8,-ScreenManager::screenHeight()/8);
+    this->move(-screenHeight/8,-screenHeight/8);
 
     this->setPointCount(3);
     this->setOutlineColor(sf::Color(ringColor));

@@ -13,6 +13,7 @@ private:
     RingMenuItemType type;
     void setType(RingMenuItemType type);
     RingMenu* parent;
+    sf::IntRect IntRectForTile(uint8_t x, uint8_t y, uint8_t tileWidth, uint8_t tileHeight);
 public:
     RingMenuItem();
     RingMenuItem(RingMenu* parent, RingMenuItemType type);
