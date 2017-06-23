@@ -3,10 +3,6 @@
 #include "../TextureManager/TextureManager.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
 
-//const float sqrt2 = sqrt(2);
-//const float diagonal34 = 34 * sqrt2;
-//const float originOffset = diagonal34 / pi;
-//const sf::Vector2f offset = sf::Vector2f(this->parent->getRadius() - 17, this->parent->getRadius() - 17);
 RingMenuItem::RingMenuItem() {
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
     this->setType(RingMenuItemTypeItem);
