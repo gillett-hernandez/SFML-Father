@@ -13,12 +13,6 @@ RingMenuItem::RingMenuItem() {
 }
 RingMenuItem::RingMenuItem(RingMenu* parent, RingMenuItemType type) {
     this->parent = parent;
-
-    float radius = this->parent->getRadius();
-    sf::Vector2f offset = sf::Vector2f(radius - 17, radius - 17);
-    this->setPosition(this->parent->getPosition()+offset);
-    //float origin = (this->parent->getPosition().x + radius)/sqrt2 - this->parent->getPosition().x - (4); //17 is 34 / 2, 34 is the width of the tiles in the sprite tileset
-    //this->setOrigin(origin, origin);
     this->setTexture(TextureManager::instance()->getRef(kRingMenuItemTexture));
     this->setType(type);
 }
