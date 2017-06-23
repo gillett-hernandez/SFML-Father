@@ -19,5 +19,6 @@ public:
     RingMenuItem(RingMenu* parent, RingMenuItemType type);
     ~RingMenuItem();
     void drawToWindow(sf::RenderWindow &windowRef) override;
+    float width();
 };
 #endif

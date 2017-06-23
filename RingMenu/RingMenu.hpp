@@ -16,10 +16,11 @@ class RingMenu: public sf::CircleShape, public Info, public InputListener, publi
 private:
     RingMenu();
     static RingMenu *s_instance;
-    bool hidden;
     std::vector<RingMenuItem> items;
     float rad;
+    void placeItems();
 public:
+    bool hidden;
     static RingMenu *instance() {
         if (!s_instance) {
             s_instance = new RingMenu;

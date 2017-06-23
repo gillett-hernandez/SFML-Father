@@ -3,21 +3,23 @@
 #include "../TextureManager/TextureManager.hpp"
 
 RingMenu *RingMenu::s_instance = nullptr;
+//sf::RectangleShape *RingMenu::overlayRect = nullptr;
 
-const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
+//const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
+const sf::Color ringColor = sf::Color(0x20,0xFF,0xFF,0x80);
 const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
 
 const double pi = 3.141592653589793;
 const double rad_max = pi * 2.0f;
 
-static const bool debug = false; 
+static const bool debug = true; 
 
 RingMenu::RingMenu() {
     float radius = ScreenManager::screenHeight()/8;
+    std::cout << "radius: " << radius << std::endl;
     rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
 
-    //this->setOrigin(radius/2, radius/2);
     int screenWidth = ScreenManager::screenWidth();
     int screenHeight = ScreenManager::screenHeight();
     
@@ -25,30 +27,54 @@ RingMenu::RingMenu() {
     this->setRadius(radius);
     this->move(-screenHeight/8,-screenHeight/8);
 
-    this->setPointCount(3);
+    this->setPointCount(32);
     this->setOutlineColor(sf::Color(ringColor));
     this->setFillColor(clearColor);
     this->setOutlineThickness(1);
-    //this->hidden = true;
-    RingMenuItem item = RingMenuItem(this, RingMenuItemTypeWeapon);
+    
+    RingMenuItem weapon = RingMenuItem(this, RingMenuItemTypeWeapon);
     RingMenuItem armor = RingMenuItem(this, RingMenuItemTypeArmor);
-    RingMenuItem shield = RingMenuItem(this, RingMenuItemTypeItem);
-    this->items.push_back(item);
+    RingMenuItem shield = RingMenuItem(this, RingMenuItemTypeShield);
+    RingMenuItem item = RingMenuItem(this, RingMenuItemTypeItem);
+    RingMenuItem spear1 = RingMenuItem(this, RingMenuItemTypeSpear1);
+    RingMenuItem spear2 = RingMenuItem(this, RingMenuItemTypeSpear2);
+    RingMenuItem spear3 = RingMenuItem(this, RingMenuItemTypeSpear3);
+
+    this->items.push_back(weapon);
     this->items.push_back(armor);
     this->items.push_back(shield);
+    this->items.push_back(item);
+    this->items.push_back(spear1);
+    this->items.push_back(spear2);
+    this->items.push_back(spear3);
+
+    this->placeItems();
+}
+
+void RingMenu::placeItems() {
+    float radius = this->getRadius();
+    sf::Vector2f position = this->getPosition();
+    size_t itemsLength = this->items.size();
+    for (size_t i = 0; i < this->items.size(); i++) {
+        sf::Vector2f pos;
+        pos.x = position.x + (radius) * cos(rad + ((rad_max / itemsLength) * i));
+        pos.y = position.y + (radius) * sin(rad + ((rad_max / itemsLength) * i));
+        float itemWidthHalf = this->items[i].width() / 2;
+        sf::Vector2f offset = sf::Vector2f(radius - (itemWidthHalf), radius - (itemWidthHalf));
+        this->items[i].setPosition(pos + offset);
+    }
 }
 
 RingMenu::~RingMenu() {
 
 }
 
-void RingMenu::hide() {
+void RingMenu::show() {
     this->setOutlineColor(ringColor);
     this->setFillColor(clearColor);
-
 }
 
-void RingMenu::show() {
+void RingMenu::hide() {
     this->setOutlineColor(clearColor);
     this->setFillColor(clearColor);
 
@@ -113,12 +139,7 @@ void RingMenu::left() {
 
     rad -= 0.05f;
 
-    for (size_t i = 0; i < this->items.size(); i++) {
-        sf::Vector2f pos;
-        pos.x = this->getPosition().x + (this->getRadius()) * cos(rad + ((rad_max / this->items.size()) * i));
-        pos.y = this->getPosition().y + (this->getRadius()) * sin(rad + ((rad_max / this->items.size()) * i));
-        this->items[i].setPosition(pos);
-    }
+    this->placeItems();
        
 }
 void RingMenu::right() {
@@ -128,12 +149,7 @@ void RingMenu::right() {
 
     rad += 0.05f;
 
-    for (size_t i = 0; i < this->items.size(); i++) {
-        sf::Vector2f pos;
-        pos.x = this->getPosition().x + (this->getRadius()) * cos(rad + ((rad_max / this->items.size()) * i));
-        pos.y = this->getPosition().y + (this->getRadius()) * sin(rad + ((rad_max / this->items.size()) * i));
-        this->items[i].setPosition(pos);
-    }
+    this->placeItems();
 }
 
 void RingMenu::enterPressed() {
