@@ -4,22 +4,23 @@ DialogueBox *DialogueBox::s_instance = nullptr;
 DialogueBox *window_ref = nullptr;
 
 static const bool debug = false;
-static const int padding = 64;
-static const int boxHeight = ScreenHeight*.33333;
+static const int padding = 4;
+#define boxHeight ScreenManager::screenHeight()*.33333
 
 DialogueBox::DialogueBox() {
-    this->setPosition(0,ScreenHeight-boxHeight);
-    this->setSize(sf::Vector2f(ScreenWidth,boxHeight));
+    this->setPosition(0,ScreenManager::screenHeight()-boxHeight);
+    this->setSize(sf::Vector2f(ScreenManager::screenWidth(),boxHeight));
     this->setFillColor(sf::Color::Black);
-
-    this->font.loadFromFile("Fonts/futrfw.ttf");
+    // case sensitive
+    this->font.loadFromFile("Fonts/FUTRFW.TTF");
     
     this->text.setFont(font);
-    this->text.setCharacterSize(boxHeight/8);
+    this->text.setCharacterSize(35);
     this->text.setStyle(sf::Text::Regular);
     this->text.setOutlineColor(sf::Color::Blue);
     this->text.setFillColor(sf::Color::White);
-    this->text.setPosition(sf::Vector2f(padding,this->getPosition().y+padding-(this->text.getCharacterSize()/2)));
+    this->text.setPosition(sf::Vector2f(padding,
+        this->getPosition().y+padding+(this->text.getCharacterSize()/8)));
 }
 
 DialogueBox::~DialogueBox() {

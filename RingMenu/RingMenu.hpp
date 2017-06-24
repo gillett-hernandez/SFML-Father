@@ -1,17 +1,26 @@
 #ifndef RINGMENU_H
 #define RINGMENU_H
 #include <SFML/Graphics.hpp>
+#include "RingMenuItem.hpp"
 #include "../Info/Info.hpp"
 #include "../Input/Input.hpp"
 #include "../FatherDrawable.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
 
+extern const double pi;
+extern const double rad_max;
+
+class RingMenuItem;
+
 class RingMenu: public sf::CircleShape, public Info, public InputListener, public FatherDrawable {
 private:
     RingMenu();
     static RingMenu *s_instance;
-    bool hidden;
+    std::vector<RingMenuItem> items;
+    float rad;
+    void placeItems();
 public:
+    bool hidden;
     static RingMenu *instance() {
         if (!s_instance) {
             s_instance = new RingMenu;
