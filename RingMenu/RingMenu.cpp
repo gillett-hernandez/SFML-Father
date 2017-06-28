@@ -3,27 +3,46 @@
 #include "../TextureManager/TextureManager.hpp"
 
 RingMenu *RingMenu::s_instance = nullptr;
-//sf::RectangleShape *RingMenu::overlayRect = nullptr;
 
-//const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
-const sf::Color ringColor = sf::Color(0x20,0xFF,0xFF,0x80);
+const sf::Color ringColor = sf::Color(0x00,0xFF,0xFF,0x55);
 const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
+const sf::Color overlayColor = sf::Color(0x00, 0x00, 0x00, 0x19);
+const sf::Color textBackgroundColor = sf::Color(0xFF,0x00,0x00,0x80);
 
 const double pi = 3.141592653589793;
 const double rad_max = pi * 2.0f;
 
-static const bool debug = true; 
+static const bool debug = false;
 
 RingMenu::RingMenu() {
+    this->fadeOutAlarm.configure(60, this);
     float radius = ScreenManager::screenHeight()/8;
-    std::cout << "radius: " << radius << std::endl;
+    if (debug) {
+        std::cout << "radius: " << radius << std::endl;
+    }
     rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
 
     int screenWidth = ScreenManager::screenWidth();
     int screenHeight = ScreenManager::screenHeight();
-    
     this->setPosition(screenWidth/2,screenHeight/2);
+    
+    this->menuFont.loadFromFile("../Fonts/FUTRFW.TTF");
+    this->menuText.setFont(this->menuFont);
+    this->menuText.setCharacterSize(20);
+    this->menuText.setStyle(sf::Text::Regular);
+    this->menuText.setFillColor(sf::Color::White);
+    this->menuText.setString("Select Item...");
+    this->menuText.setPosition(screenWidth/2 - this->menuText.getLocalBounds().width/2,screenHeight/2);
+
+    this->textBackground.setFillColor(textBackgroundColor);
+
+    sf::FloatRect textBounds = this->menuText.getGlobalBounds();
+    
+    this->textBackground.setSize(sf::Vector2f(textBounds.width+20.0f, textBounds.height+20.0f));
+    this->textBackground.setPosition(sf::Vector2f(textBounds.left-10.0f, textBounds.top-10.0f));
+
+
     this->setRadius(radius);
     this->move(-screenHeight/8,-screenHeight/8);
 
@@ -49,6 +68,8 @@ RingMenu::RingMenu() {
     this->items.push_back(spear3);
 
     this->placeItems();
+    this->overlay.setSize(sf::Vector2f(screenWidth, screenHeight));
+    this->overlay.setFillColor(sf::Color(overlayColor));
 }
 
 void RingMenu::placeItems() {
@@ -69,17 +90,6 @@ RingMenu::~RingMenu() {
 
 }
 
-void RingMenu::show() {
-    this->setOutlineColor(ringColor);
-    this->setFillColor(clearColor);
-}
-
-void RingMenu::hide() {
-    this->setOutlineColor(clearColor);
-    this->setFillColor(clearColor);
-
-}
-
 void RingMenu::upPressed() {
     if (debug) {
         std::cout << "RingMenu::upPressed" << std::endl;
@@ -89,6 +99,7 @@ void RingMenu::downPressed() {
     if (debug) {
         std::cout << "RingMenu::downPressed" << std::endl;
     }
+    this->fadeOutAlarm.addToManager(AlarmManager::instance());
 }
 void RingMenu::leftPressed() {
     if (debug) {
@@ -161,17 +172,45 @@ void RingMenu::enterPressed() {
 }
 
 void RingMenu::drawToWindow(sf::RenderWindow &windowRef) {
-    windowRef.draw(*this);
-    for (RingMenuItem item: this->items) {
-        item.drawToWindow(windowRef);
+    if (this->hidden == false) {
+        windowRef.draw(this->overlay);
+        windowRef.draw(this->textBackground);
+        windowRef.draw(this->menuText);
+        windowRef.draw(*this);
+        for (RingMenuItem item: this->items) {
+            item.drawToWindow(windowRef);
+        }
     }
 }
 
 void RingMenu::toggleHidden() {
     this->hidden = !this->hidden;
-    if (this->hidden) {
-        this->hide();
-    } else {
-        this->show();
+    if (this->hidden == false) {
+        this->rad = 0.0f;
+        this->placeItems();
+    }
+}
+
+void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames) {
+    if (debug) std::cout << "frame tick" << std::endl;
+    if (alarm == &this->fadeOutAlarm) {
+        sf::Color newRingColor = this->getOutlineColor();
+        sf::Color newTextBackgroundColor = this->textBackground.getFillColor();
+        //sf::Color newTextColor = this->menuText.getOutlineColor();
+
+        sf::Uint8 ringAlphaInc = 1;//(ringColor.a * framesMultiplier) ? ringColor.a * framesMultiplier : 1;
+        sf::Uint8 textBackgroundAlphaInc = 1; //(textBackgroundColor.a * framesMultiplier) ? textBackgroundColor.a / frames : 1;
+        if (newRingColor.a > 0) {
+            newRingColor.a -= ringAlphaInc;
+        } else {
+            if (debug) std::cout << "newRingColor already transparent!" << std::endl;
+        }
+        if (newTextBackgroundColor.a > 0) {
+            newTextBackgroundColor.a -= textBackgroundAlphaInc;
+        } else {
+            if (debug) std::cout << "newOverlayColor already transparent!" << std::endl;
+        }
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
     }
 }

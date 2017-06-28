@@ -7,10 +7,13 @@
 #include "RingMenu/RingMenu.hpp"
 #include "DialogueBox/DialogueBox.hpp"
 #include "TextureManager/TextureManager.hpp"
+#include "Alarm/AlarmManager.hpp"
 
 const bool debug = false;
 
 void logArgs(int argc, char const *argv[]);
+void setupFPSText(sf::Text &text, sf::Font &font);
+void setFPSTextUsingClock(sf::Text &text, sf::Clock &clock);
 
 int main(int argc, char const *argv[]) {
     if (debug) {
@@ -21,7 +24,6 @@ int main(int argc, char const *argv[]) {
     window.setVerticalSyncEnabled(true);
 
     TextureManager *textureManager = TextureManager::instance();
-    std::cout << &textureManager;
     textureManager->loadTexture(kRingMenuItemTexture, kRingMenuItemTextureFilePath);
 
     Input *input = Input::instance();
@@ -37,13 +39,33 @@ int main(int argc, char const *argv[]) {
     input->addListener(ring);
     input->addListener(dialogueBox);
     dialogueBox->show(
+        "Press ESC to exit SFML father \n\n"
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
         "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
         "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         );
+
+
+    sf::Text fpsText;
+    sf::Font fpsFont;
+
+    if (debug) {
+        setupFPSText(fpsText, fpsFont);
+    }
+
+    sf::Clock fpsClock;
+    std::string fpsString;
+
+    AlarmManager *alarmManager = AlarmManager::instance();
+
     while (window.isOpen()) {
+        alarmManager->incrementFrame();
+        if (debug) {
+            setFPSTextUsingClock(fpsText, fpsClock);
+        }
+
         input->clearInput();
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -58,9 +80,12 @@ int main(int argc, char const *argv[]) {
             input->processEvent(event);
         }
         input->informListeners();
-        window.clear(sf::Color(0x20,0x00,0x20));
+        window.clear(sf::Color(0x28,0x00,0x28));
         for (FatherDrawable *drawable : drawables) {
             drawable->drawToWindow(window);
+        }
+        if (debug) {
+            window.draw(fpsText);
         }
         window.display();
     }
@@ -74,4 +99,23 @@ void logArgs(int argc, char const *argv[]) {
         std::cout << std::endl << "arg "<< i << ": " << argv[i];
     }
     std::cout << std::endl;
+}
+
+void setupFPSText(sf::Text &text, sf::Font &font) {
+    text.setOutlineColor(sf::Color(sf::Color::White));
+    text.setFillColor(sf::Color(sf::Color::White));
+    text.setPosition(2,2);
+    text.setCharacterSize(14);
+    text.setStyle(sf::Text::Regular);
+    font.loadFromFile("../Fonts/FUTRFW.TTF");
+    text.setFont(font);
+    text.setString("hi");
+}
+
+void setFPSTextUsingClock(sf::Text &text, sf::Clock &clock) {
+    std::string fpsString;
+    fpsString = "";
+    fpsString.append("fps: ");
+    fpsString.append(std::to_string(1.f / clock.restart().asSeconds()));
+    text.setString(fpsString);
 }

@@ -17,21 +17,21 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -44,13 +44,13 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.1.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
 					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 SFML-Father"/>
@@ -66,13 +66,13 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.1.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
 					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/ehernandez/Documents/Code/C++/SFML-Father/cmake-build-debug/Makefile&quot;  VERBOSE=1 SFML-Father/fast"/>
@@ -82,28 +82,61 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Info.cpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Alarm/Alarm.cpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Info.hpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Alarm/Alarm.hpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input.cpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Alarm/AlarmListener.hpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input.hpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Alarm/AlarmManager.cpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/InputListener.hpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Alarm/AlarmManager.hpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/InputStruct.hpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/DialogueBox/DialogueBox.cpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu.cpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/DialogueBox/DialogueBox.hpp">
 			<Option target="SFML-Father"/>
 		</Unit>
-		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu.hpp">
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Info/Info.cpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Info/Info.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input/Input.cpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input/Input.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input/InputListener.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/Input/InputStruct.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu/RingMenu.cpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu/RingMenu.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu/RingMenuItem.cpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/RingMenu/RingMenuItem.hpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/TextureManager/TextureManager.cpp">
+			<Option target="SFML-Father"/>
+		</Unit>
+		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/TextureManager/TextureManager.hpp">
 			<Option target="SFML-Father"/>
 		</Unit>
 		<Unit filename="/Users/ehernandez/Documents/Code/C++/SFML-Father/main.cpp">
