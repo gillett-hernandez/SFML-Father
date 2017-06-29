@@ -17,14 +17,17 @@ private:
     sf::Uint8 currentFrame;
     sf::Uint8 frames;
     //std::vector<AlarmListener *> listeners; // maybe one alarm will need to inform several listeners?
+    std::string title;
     AlarmListener *listener;
+    bool operator==(Alarm &other);
+    bool operator!=(Alarm &other);
 public:
     Alarm();
     void incrementFrame();
-    Alarm(int frames, AlarmListener *listener);
+    Alarm(std::string title, int frames, AlarmListener *listener);
     void setAlarmListener(AlarmListener *listener);
     void addToManager(AlarmManager *manager);
-    void configure(int frames, AlarmListener *listener);
+    void configure(std::string title, int frames, AlarmListener *listener);
     Alarm(AlarmListener *listener);
     ~Alarm();
 };

@@ -20,9 +20,9 @@ Alarm::Alarm(AlarmListener *listener) {
     this->listener = listener;
 }
 
-Alarm::Alarm(int frames, AlarmListener *listener) {
+Alarm::Alarm(std::string title, int frames, AlarmListener *listener) {
     this->currentFrame = 0;
-    configure(frames, listener);
+    configure(title, frames, listener);
 }
 
 Alarm::~Alarm() {
@@ -58,8 +58,17 @@ void Alarm::addToManager(AlarmManager *manager) {
     manager->addAlarm(this);
 }
 
-void Alarm::configure(int frames, AlarmListener *listener) {
+void Alarm::configure(std::string title, int frames, AlarmListener *listener) {
+    this->title = title;
     this->currentFrame = 0;
     this->frames = frames;
     this->setAlarmListener(listener);
+}
+
+bool Alarm::operator==(Alarm &other) {
+    return title == other.title && listener == other.listener && frames == other.frames;
+}
+
+bool Alarm::operator!=(Alarm &other) {
+    return !(title == other.title && listener == other.listener && frames == other.frames);
 }

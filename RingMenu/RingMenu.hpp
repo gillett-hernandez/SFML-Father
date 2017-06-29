@@ -28,9 +28,13 @@ private:
     sf::Font menuFont;
     Alarm fadeOutAlarm;
     Alarm fadeInAlarm;
-public:
-
     bool hidden;
+    void fadeIn();
+    void fadeOut();
+public:
+    bool isHidden() {
+        return this->hidden;
+    }
     static RingMenu *instance() {
         if (!s_instance) {
             s_instance = new RingMenu;

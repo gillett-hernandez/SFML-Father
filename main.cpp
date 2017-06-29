@@ -110,7 +110,7 @@ void setupFPSText(sf::Text &text, sf::Font &font) {
     text.setPosition(2,2);
     text.setCharacterSize(14);
     text.setStyle(sf::Text::Regular);
-    font.loadFromFile("../Fonts/FUTRFW.TTF");
+    font.loadFromFile("Fonts/FUTRFW.TTF");
     text.setFont(font);
     text.setString("hi");
 }

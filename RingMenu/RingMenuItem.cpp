@@ -92,9 +92,9 @@ RingMenuItem::~RingMenuItem() {
 
 }
 void RingMenuItem::drawToWindow(sf::RenderWindow &windowRef) {
-    if (this->parent->hidden == false) {
+    //if (this->parent->isHidden() == false) {
         windowRef.draw(*this);
-    }
+    //}
 }
 
 float RingMenuItem::width() {
