@@ -23,7 +23,7 @@ set(SOURCE_FILES
     Alarm/Alarm.hpp
     Alarm/AlarmListener.hpp
     Alarm/AlarmManager.cpp
-    Alarm/AlarmManager.hpp)
+    Alarm/AlarmManager.hpp Lerp/Lerp.cpp Lerp/Lerp.hpp)
 
 add_executable(SFML-Father ${SOURCE_FILES})
 

@@ -1,6 +1,6 @@
 #include "RingMenu.hpp"
 #include <cmath>
-#include "../TextureManager/TextureManager.hpp"
+#include "../Lerp/Lerp.hpp"
 
 RingMenu *RingMenu::s_instance = nullptr;
 
@@ -218,9 +218,9 @@ void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames)
         sf::Color newTextBackgroundColor = textBackgroundColor;
         sf::Color newTextColor = sf::Color::White;
 
-        newRingColor.a = sfUint8Lerp(ringColor.a, 0, currentFrame, frames);
-        newTextBackgroundColor.a = sfUint8Lerp(textBackgroundColor.a, 0, currentFrame, frames);
-        newTextColor.a = sfUint8Lerp(sf::Color::White.a, 0, currentFrame, frames);
+        newRingColor.a = Lerp::sfUint8Lerp(ringColor.a, 0 , currentFrame, frames);
+        newTextBackgroundColor.a = Lerp::sfUint8Lerp(textBackgroundColor.a, 0, currentFrame, frames);
+        newTextColor.a = Lerp::sfUint8Lerp(sf::Color::White.a, 0, currentFrame, frames);
 
         this->setOutlineColor(newRingColor);
         this->textBackground.setFillColor(newTextBackgroundColor);
@@ -237,9 +237,9 @@ void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames)
         sf::Color newTextBackgroundColor = textBackgroundColor;
         sf::Color newTextColor = sf::Color::White;
 
-        newRingColor.a = sfUint8Lerp(0, ringColor.a, currentFrame, frames);
-        newTextBackgroundColor.a = sfUint8Lerp(0, textBackgroundColor.a, currentFrame, frames);
-        newTextColor.a = sfUint8Lerp(0, sf::Color::White.a, currentFrame, frames);
+        newRingColor.a = Lerp::sfUint8Lerp(0, ringColor.a, currentFrame, frames);
+        newTextBackgroundColor.a = Lerp::sfUint8Lerp(0, textBackgroundColor.a, currentFrame, frames);
+        newTextColor.a = Lerp::sfUint8Lerp(0, sf::Color::White.a, currentFrame, frames);
 
         this->setOutlineColor(newRingColor);
         this->textBackground.setFillColor(newTextBackgroundColor);

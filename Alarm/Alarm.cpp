@@ -66,9 +66,11 @@ void Alarm::configure(std::string title, int frames, AlarmListener *listener) {
 }
 
 bool Alarm::operator==(Alarm &other) {
-    return title == other.title && listener == other.listener && frames == other.frames;
+    //return title == other.title && listener == other.listener && frames == other.frames;
+    return *this == other;
 }
 
 bool Alarm::operator!=(Alarm &other) {
-    return !(title == other.title && listener == other.listener && frames == other.frames);
+    //return !(title == other.title && listener == other.listener && frames == other.frames);
+    return *this != other;
 }
