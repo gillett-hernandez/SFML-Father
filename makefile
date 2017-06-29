@@ -6,8 +6,8 @@ all:
 run: $(PROJECT)
 	./$(PROJECT) $(PROJECT)
 
-$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o
-	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o -o $(PROJECT) -lsfml-window -lsfml-system -lsfml-graphics
+$(PROJECT): main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o Alarm.o AlarmManager.o
+	g++ $(CFLAGS) main.o Info.o RingMenu.o Input.o DialogueBox.o ScreenManager.o RingMenuItem.o TextureManager.o Alarm.o AlarmManager.o -o $(PROJECT) -lsfml-window -lsfml-system -lsfml-graphics
 
 main.o: main.cpp FatherDrawable.hpp
 	g++ $(CFLAGS) -c main.cpp
@@ -32,6 +32,12 @@ ScreenManager.o: ScreenManager/ScreenManager.cpp ScreenManager/ScreenManager.hpp
 
 TextureManager.o: TextureManager/TextureManager.cpp TextureManager/TextureManager.hpp
 	g++ $(CFLAGS) -c TextureManager/TextureManager.cpp
+
+Alarm.o: Alarm/Alarm.cpp Alarm/Alarm.hpp Alarm/AlarmListener.hpp
+	g++ $(CFLAGS) -c Alarm/Alarm.cpp
+
+AlarmManager.o: Alarm/AlarmManager.cpp Alarm/AlarmManager.hpp Alarm/AlarmListener.hpp
+	g++ $(CFLAGS) -c Alarm/AlarmManager.cpp
 
 clean:
 	rm *.o

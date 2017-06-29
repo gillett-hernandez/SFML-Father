@@ -28,7 +28,7 @@ RingMenu::RingMenu() {
     int screenHeight = ScreenManager::screenHeight();
     this->setPosition(screenWidth/2,screenHeight/2);
     
-    this->menuFont.loadFromFile("../Fonts/FUTRFW.TTF");
+    this->menuFont.loadFromFile("Fonts/FUTRFW.TTF");
     this->menuText.setFont(this->menuFont);
     this->menuText.setCharacterSize(20);
     this->menuText.setStyle(sf::Text::Regular);

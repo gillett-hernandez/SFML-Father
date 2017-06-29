@@ -12,7 +12,7 @@ DialogueBox::DialogueBox() {
     this->setSize(sf::Vector2f(ScreenManager::screenWidth(),boxHeight));
     this->setFillColor(sf::Color::Black);
     // case sensitive
-    this->font.loadFromFile("../Fonts/FUTRFW.TTF");
+    this->font.loadFromFile("Fonts/FUTRFW.TTF");
     
     this->text.setFont(font);
     this->text.setCharacterSize(35);

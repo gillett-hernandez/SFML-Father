@@ -1,6 +1,6 @@
 #include "TextureManager.hpp"
 const std::string kRingMenuItemTexture = "RingMenuItemTexture";
-const std::string kRingMenuItemTextureFilePath = "../Images/icons.png";
+const std::string kRingMenuItemTextureFilePath = "Images/icons.png";
 TextureManager *TextureManager::s_instance = nullptr;
 TextureManager::TextureManager() {
 
