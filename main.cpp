@@ -10,6 +10,7 @@
 #include "Alarm/AlarmManager.hpp"
 
 const bool debug = false;
+const bool showFPS = true;
 
 void logArgs(int argc, char const *argv[]);
 void setupFPSText(sf::Text &text, sf::Font &font);
@@ -51,7 +52,7 @@ int main(int argc, char const *argv[]) {
     sf::Text fpsText;
     sf::Font fpsFont;
 
-    if (debug) {
+    if (showFPS) {
         setupFPSText(fpsText, fpsFont);
     }
 
@@ -61,8 +62,10 @@ int main(int argc, char const *argv[]) {
     AlarmManager *alarmManager = AlarmManager::instance();
 
     while (window.isOpen()) {
-        alarmManager->incrementFrame();
-        if (debug) {
+        if (alarmManager->alarmsCount() > 0) {
+            alarmManager->incrementFrame();
+        }
+        if (showFPS) {
             setFPSTextUsingClock(fpsText, fpsClock);
         }
 
@@ -84,7 +87,7 @@ int main(int argc, char const *argv[]) {
         for (FatherDrawable *drawable : drawables) {
             drawable->drawToWindow(window);
         }
-        if (debug) {
+        if (showFPS) {
             window.draw(fpsText);
         }
         window.display();

@@ -13,7 +13,6 @@ Alarm Alarm::*listener = nullptr;
 
 Alarm::Alarm() {
     this->currentFrame = 0;
-    //this->listener->frameTick(this, this->currentFrame);
 }
 
 Alarm::Alarm(AlarmListener *listener) {
@@ -23,12 +22,12 @@ Alarm::Alarm(AlarmListener *listener) {
 
 Alarm::Alarm(int frames, AlarmListener *listener) {
     this->currentFrame = 0;
-    this->frames = frames;
-    this->listener = listener;
-    AlarmManager::instance()->addAlarm(this);
+    configure(frames, listener);
 }
 
 Alarm::~Alarm() {
+    AlarmManager::instance()->removeAlarm(this);
+    this->listener = nullptr;
 
 }
 
@@ -43,13 +42,13 @@ void Alarm::incrementFrame() {
         } else {
             if (debug) std::cout << "There is no listener" << std::endl;
         }
-        this->currentFrame++;
     } else {
         AlarmManager::instance()->removeAlarm(this);
         if (debug) {
             std::cout << "AlarmManager removed alarm" << std::endl;
         }
     }
+    this->currentFrame++;
 }
 
 void Alarm::setAlarmListener(AlarmListener *listener) {
@@ -60,6 +59,7 @@ void Alarm::addToManager(AlarmManager *manager) {
 }
 
 void Alarm::configure(int frames, AlarmListener *listener) {
+    this->currentFrame = 0;
     this->frames = frames;
     this->setAlarmListener(listener);
 }

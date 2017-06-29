@@ -27,6 +27,7 @@ private:
     sf::RectangleShape textBackground;
     sf::Font menuFont;
     Alarm fadeOutAlarm;
+    Alarm fadeInAlarm;
 public:
 
     bool hidden;

@@ -6,11 +6,15 @@
 #include "Alarm.hpp"
 #include <iostream>
 
-const bool debug = false;
+const bool debug = true;
 
 AlarmManager *AlarmManager::s_instance = nullptr;
 
 AlarmManager::AlarmManager() {
+
+}
+
+AlarmManager::~AlarmManager() {
 
 }
 
@@ -28,5 +32,4 @@ void AlarmManager::addAlarm(Alarm *alarm) {
 
 void AlarmManager::removeAlarm(Alarm *alarm) {
     this->alarms.erase(std::remove(this->alarms.begin(), this->alarms.end(), alarm), this->alarms.end());
-    alarm->setAlarmListener(nullptr);
 }

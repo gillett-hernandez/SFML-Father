@@ -15,7 +15,8 @@ const double rad_max = pi * 2.0f;
 static const bool debug = false;
 
 RingMenu::RingMenu() {
-    this->fadeOutAlarm.configure(60, this);
+    this->fadeOutAlarm.configure(5, this);
+    this->fadeInAlarm.configure(5, this);
     float radius = ScreenManager::screenHeight()/8;
     if (debug) {
         std::cout << "radius: " << radius << std::endl;
@@ -94,11 +95,14 @@ void RingMenu::upPressed() {
     if (debug) {
         std::cout << "RingMenu::upPressed" << std::endl;
     }
+    this->fadeInAlarm.configure(5, this);
+    this->fadeInAlarm.addToManager(AlarmManager::instance());
 }
 void RingMenu::downPressed() {
     if (debug) {
         std::cout << "RingMenu::downPressed" << std::endl;
     }
+    this->fadeOutAlarm.configure(5, this);
     this->fadeOutAlarm.addToManager(AlarmManager::instance());
 }
 void RingMenu::leftPressed() {
@@ -191,26 +195,83 @@ void RingMenu::toggleHidden() {
     }
 }
 
+sf::Uint8 sfUint8Lerp(sf::Uint8 a, sf::Uint8 b, sf::Uint8 top, sf::Uint8 bottom) {
+    // lerp stands for Linear intERPolation
+    // this function returns the point that is exactly `top/bottom` of the way from `a` to `b`
+    return (a * bottom + (b - a) * top) / bottom;
+}
+
 void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames) {
     if (debug) std::cout << "frame tick" << std::endl;
     if (alarm == &this->fadeOutAlarm) {
-        sf::Color newRingColor = this->getOutlineColor();
-        sf::Color newTextBackgroundColor = this->textBackground.getFillColor();
-        //sf::Color newTextColor = this->menuText.getOutlineColor();
 
-        sf::Uint8 ringAlphaInc = 1;//(ringColor.a * framesMultiplier) ? ringColor.a * framesMultiplier : 1;
-        sf::Uint8 textBackgroundAlphaInc = 1; //(textBackgroundColor.a * framesMultiplier) ? textBackgroundColor.a / frames : 1;
-        if (newRingColor.a > 0) {
-            newRingColor.a -= ringAlphaInc;
-        } else {
-            if (debug) std::cout << "newRingColor already transparent!" << std::endl;
-        }
-        if (newTextBackgroundColor.a > 0) {
-            newTextBackgroundColor.a -= textBackgroundAlphaInc;
-        } else {
-            if (debug) std::cout << "newOverlayColor already transparent!" << std::endl;
-        }
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a = sfUint8Lerp(ringColor.a, 0, currentFrame, frames);
+        newTextBackgroundColor.a = sfUint8Lerp(textBackgroundColor.a, 0, currentFrame, frames);
+        newTextColor.a = sfUint8Lerp(sf::Color::White.a, 0, currentFrame, frames);
+
         this->setOutlineColor(newRingColor);
         this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
+    } else if (alarm == &this->fadeInAlarm) {
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a = sfUint8Lerp(0, ringColor.a, currentFrame, frames);
+        newTextBackgroundColor.a = sfUint8Lerp(0, textBackgroundColor.a, currentFrame, frames);
+        newTextColor.a = sfUint8Lerp(0, sf::Color::White.a, currentFrame, frames);
+
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
     }
+
+/*
+void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames) {
+    if (debug) std::cout << "frame tick" << std::endl;
+    if (alarm == &this->fadeOutAlarm) {
+
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a -= ringColor.a * currentFrame / frames;
+        newTextBackgroundColor.a -= textBackgroundColor.a * currentFrame / frames;
+        newTextColor.a -= sf::Color::White.a * currentFrame / frames;
+
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
+    } else if (alarm == &this->fadeInAlarm) {
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a = newTextBackgroundColor.a = newTextColor.a = 0;
+
+        newRingColor.a += ringColor.a * currentFrame / frames;
+        newTextBackgroundColor.a += textBackgroundColor.a * currentFrame / frames;
+        newTextColor.a += sf::Color::White.a * currentFrame / frames;
+
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
+    }
+    */
 }

@@ -26,6 +26,10 @@ public:
     void removeAlarm(Alarm *alarm);
     void incrementFrame();
     ~AlarmManager();
+
+    unsigned long alarmsCount() {
+        return this->alarms.size();
+    }
 };
 
 
