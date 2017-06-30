@@ -1,29 +1,49 @@
 #include "RingMenu.hpp"
 #include <cmath>
-#include "../TextureManager/TextureManager.hpp"
+#include "../Lerp/Lerp.hpp"
 
 RingMenu *RingMenu::s_instance = nullptr;
-//sf::RectangleShape *RingMenu::overlayRect = nullptr;
 
-//const sf::Color ringColor = sf::Color(0xFF,0xFF,0xFF,0xFF);
-const sf::Color ringColor = sf::Color(0x20,0xFF,0xFF,0x80);
-const sf::Color clearColor = sf::Color(0x00,0x00,0x00,0x00);
+const sf::Color ringColor = sf::Color(0x00,0xFF,0xFF,0x80);
+const sf::Color clearColor = sf::Color::Transparent;
+const sf::Color overlayColor = sf::Color(0x00, 0x00, 0x00, 0x40);
+const sf::Color textBackgroundColor = sf::Color(0xFF,0x00,0x00,0x80);
 
 const double pi = 3.141592653589793;
 const double rad_max = pi * 2.0f;
+const std::string kFadeInAlarmTitle = "fadeIn";
+const std::string kFadeOutAlarmTitle = "fadeOut";
 
-static const bool debug = true; 
+static const bool debug = false;
 
 RingMenu::RingMenu() {
     float radius = ScreenManager::screenHeight()/8;
-    std::cout << "radius: " << radius << std::endl;
+    if (debug) {
+        std::cout << "radius: " << radius << std::endl;
+    }
     rad = 0.0f;
     this->setInfo(std::string("This is a Ring Menu"));
 
     int screenWidth = ScreenManager::screenWidth();
     int screenHeight = ScreenManager::screenHeight();
-    
     this->setPosition(screenWidth/2,screenHeight/2);
+    
+    this->menuFont.loadFromFile("Fonts/FUTRFW.TTF");
+    this->menuText.setFont(this->menuFont);
+    this->menuText.setCharacterSize(20);
+    this->menuText.setStyle(sf::Text::Regular);
+    this->menuText.setFillColor(sf::Color::White);
+    this->menuText.setString("Select Item...");
+    this->menuText.setPosition(screenWidth/2 - this->menuText.getLocalBounds().width/2,screenHeight/2);
+
+    this->textBackground.setFillColor(textBackgroundColor);
+
+    sf::FloatRect textBounds = this->menuText.getGlobalBounds();
+    
+    this->textBackground.setSize(sf::Vector2f(textBounds.width+20.0f, textBounds.height+20.0f));
+    this->textBackground.setPosition(sf::Vector2f(textBounds.left-10.0f, textBounds.top-10.0f));
+
+
     this->setRadius(radius);
     this->move(-screenHeight/8,-screenHeight/8);
 
@@ -49,6 +69,8 @@ RingMenu::RingMenu() {
     this->items.push_back(spear3);
 
     this->placeItems();
+    this->overlay.setSize(sf::Vector2f(screenWidth, screenHeight));
+    this->overlay.setFillColor(sf::Color(overlayColor));
 }
 
 void RingMenu::placeItems() {
@@ -66,17 +88,6 @@ void RingMenu::placeItems() {
 }
 
 RingMenu::~RingMenu() {
-
-}
-
-void RingMenu::show() {
-    this->setOutlineColor(ringColor);
-    this->setFillColor(clearColor);
-}
-
-void RingMenu::hide() {
-    this->setOutlineColor(clearColor);
-    this->setFillColor(clearColor);
 
 }
 
@@ -161,17 +172,80 @@ void RingMenu::enterPressed() {
 }
 
 void RingMenu::drawToWindow(sf::RenderWindow &windowRef) {
-    windowRef.draw(*this);
-    for (RingMenuItem item: this->items) {
-        item.drawToWindow(windowRef);
+    if (true) {
+        windowRef.draw(this->overlay);
+        windowRef.draw(this->textBackground);
+        windowRef.draw(this->menuText);
+        windowRef.draw(*this);
+        for (RingMenuItem item: this->items) {
+            item.drawToWindow(windowRef);
+        }
     }
 }
 
 void RingMenu::toggleHidden() {
-    this->hidden = !this->hidden;
     if (this->hidden) {
-        this->hide();
+        this->fadeIn();
     } else {
-        this->show();
+        this->fadeOut();
+    }
+    this->hidden = !this->hidden;
+}
+
+void RingMenu::fadeIn() {
+    this->fadeInAlarm.configure(kFadeInAlarmTitle, 20, this);
+    this->fadeInAlarm.addToManager(AlarmManager::instance());
+}
+
+void RingMenu::fadeOut() {
+    this->fadeOutAlarm.configure(kFadeOutAlarmTitle, 20, this);
+    this->fadeOutAlarm.addToManager(AlarmManager::instance());
+
+};
+
+sf::Uint8 sfUint8Lerp(sf::Uint8 a, sf::Uint8 b, sf::Uint8 top, sf::Uint8 bottom) {
+    // lerp stands for Linear intERPolation
+    // this function returns the point that is exactly `top/bottom` of the way from `a` to `b`
+    return (a * bottom + (b - a) * top) / bottom;
+}
+
+void RingMenu::frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames) {
+    if (debug) std::cout << "frame tick" << std::endl;
+
+    if (alarm == &this->fadeOutAlarm) {
+
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a = Lerp::sfUint8Lerp(ringColor.a, 0 , currentFrame, frames);
+        newTextBackgroundColor.a = Lerp::sfUint8Lerp(textBackgroundColor.a, 0, currentFrame, frames);
+        newTextColor.a = Lerp::sfUint8Lerp(sf::Color::White.a, 0, currentFrame, frames);
+
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
+        if (currentFrame == frames) {
+            this->rad = 0.0f;
+            this->placeItems();
+        }
+    } else if (alarm == &this->fadeInAlarm) {
+        sf::Color newRingColor = ringColor;
+        sf::Color newTextBackgroundColor = textBackgroundColor;
+        sf::Color newTextColor = sf::Color::White;
+
+        newRingColor.a = Lerp::sfUint8Lerp(0, ringColor.a, currentFrame, frames);
+        newTextBackgroundColor.a = Lerp::sfUint8Lerp(0, textBackgroundColor.a, currentFrame, frames);
+        newTextColor.a = Lerp::sfUint8Lerp(0, sf::Color::White.a, currentFrame, frames);
+
+        this->setOutlineColor(newRingColor);
+        this->textBackground.setFillColor(newTextBackgroundColor);
+        this->menuText.setFillColor(newTextColor);
+        for (RingMenuItem &item: this->items) {
+            item.setColor(newTextColor);
+        }
     }
 }

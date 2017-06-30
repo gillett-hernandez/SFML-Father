@@ -6,21 +6,35 @@
 #include "../Input/Input.hpp"
 #include "../FatherDrawable.hpp"
 #include "../ScreenManager/ScreenManager.hpp"
+#include "../Alarm/Alarm.hpp"
+#include "../Alarm/AlarmManager.hpp"
+#include "../Alarm/AlarmListener.hpp"
 
 extern const double pi;
 extern const double rad_max;
 
 class RingMenuItem;
 
-class RingMenu: public sf::CircleShape, public Info, public InputListener, public FatherDrawable {
+class RingMenu: public sf::CircleShape, public Info, public InputListener, public FatherDrawable, public AlarmListener {
 private:
     RingMenu();
     static RingMenu *s_instance;
     std::vector<RingMenuItem> items;
     float rad;
     void placeItems();
-public:
+    sf::RectangleShape overlay;
+    sf::Text menuText;
+    sf::RectangleShape textBackground;
+    sf::Font menuFont;
+    Alarm fadeOutAlarm;
+    Alarm fadeInAlarm;
     bool hidden;
+    void fadeIn();
+    void fadeOut();
+public:
+    bool isHidden() {
+        return this->hidden;
+    }
     static RingMenu *instance() {
         if (!s_instance) {
             s_instance = new RingMenu;
@@ -29,8 +43,6 @@ public:
     }
     ~RingMenu();
     void toggleHidden();
-    void hide();
-    void show();
     void upPressed() override;
     void downPressed() override;
     void leftPressed() override;
@@ -47,6 +59,8 @@ public:
     void right() override;
     void enterPressed() override;
     void drawToWindow(sf::RenderWindow &windowRef) override;
+
+    void frameTick(Alarm *alarm, sf::Uint8 currentFrame, sf::Uint8 frames) override;
 };
 
 #endif

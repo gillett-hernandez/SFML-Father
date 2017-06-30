@@ -28,3 +28,7 @@
 *.out
 *.app
 SFML-Father
+
+cmake-build-debug/**
+.idea/workspace.xml
+.idea/tasks.xml

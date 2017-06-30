@@ -1,1 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/SFML_Father.dir/Info.cpp.o CMakeFiles/SFML_Father.dir/Input.cpp.o CMakeFiles/SFML_Father.dir/main.cpp.o CMakeFiles/SFML_Father.dir/RingMenu.cpp.o  -o SFML_Father 
