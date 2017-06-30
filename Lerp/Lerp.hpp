@@ -9,8 +9,7 @@
 
 namespace Lerp {
     sf::Uint8 sfUint8Lerp(sf::Uint8 a, sf::Uint8 b, sf::Uint8 top, sf::Uint8 bottom);
-
-};
+}
 
 
 #endif //SFML_FATHER_LERP_HPP

@@ -200,8 +200,7 @@ void RingMenu::fadeIn() {
 void RingMenu::fadeOut() {
     this->fadeOutAlarm.configure(kFadeOutAlarmTitle, 20, this);
     this->fadeOutAlarm.addToManager(AlarmManager::instance());
-
-};
+}
 
 sf::Uint8 sfUint8Lerp(sf::Uint8 a, sf::Uint8 b, sf::Uint8 top, sf::Uint8 bottom) {
     // lerp stands for Linear intERPolation
